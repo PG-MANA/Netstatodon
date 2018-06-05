@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+require 'cgi'
+require 'net/http'
+require 'uri'
+
 class Auth::RegistrationsController < Devise::RegistrationsController
   layout :determine_layout
 
@@ -28,9 +32,23 @@ class Auth::RegistrationsController < Devise::RegistrationsController
     resource.build_account if resource.account.nil?
   end
 
+  def check_recaptcha
+    return false unless params.has_key?("g-recaptcha-response")
+      reply = Net::HTTP.post_form(URI.parse("https://www.google.com/recaptcha/api/siteverify"),
+        {
+          :secret     => '6LeSaB4UAAAAAEQNdzbcu8pkDwNrA0vyIB3JXNA0',
+          :remoteip   => CGI.escape(request.remote_ip),
+          :response   => CGI.escape(params["g-recaptcha-response"])
+        })
+      json = JSON.parse(reply.body)
+      json["success"]
+  end
+
   def configure_sign_up_params
     devise_parameter_sanitizer.permit(:sign_up) do |u|
-      u.permit({ account_attributes: [:username] }, :email, :password, :password_confirmation, :invite_code)
+      if check_recaptcha
+        u.permit({ account_attributes: [:username] }, :email, :password, :password_confirmation, :invite_code)
+      end
     end
   end
 
