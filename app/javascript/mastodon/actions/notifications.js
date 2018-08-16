@@ -42,12 +42,14 @@ export function updateNotifications(notification, intlMessages, intlLocale) {
     const filters      = getFilters(getState(), { contextType: 'notifications' });
 
     let filtered = false;
+    let sound = 'boop';
 
     if (notification.type === 'mention') {
       const regex       = regexFromFilters(filters);
       const searchIndex = notification.status.spoiler_text + '\n' + unescapeHTML(notification.status.content);
 
       filtered = regex && regex.test(searchIndex);
+      sound = 'reply_boop';
     }
 
     if (showInColumn) {
@@ -60,14 +62,14 @@ export function updateNotifications(notification, intlMessages, intlLocale) {
       dispatch({
         type: NOTIFICATIONS_UPDATE,
         notification,
-        meta: (playSound && !filtered) ? { sound: 'boop' } : undefined,
+        meta: (playSound && !filtered) ? { sound: sound } : undefined,
       });
 
       fetchRelatedRelationships(dispatch, [notification]);
     } else if (playSound && !filtered) {
       dispatch({
         type: NOTIFICATIONS_UPDATE_NOOP,
-        meta: { sound: 'boop' },
+        meta: { sound: sound },
       });
     }
 
