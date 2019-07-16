@@ -49,8 +49,13 @@ export function updateNotifications(notification, intlMessages, intlLocale) {
     let sound = 'boop';
 
     if (notification.type === 'mention') {
+      const dropRegex   = regexFromFilters(filters.filter(filter => filter.get('irreversible')));
       const regex       = regexFromFilters(filters);
       const searchIndex = notification.status.spoiler_text + '\n' + unescapeHTML(notification.status.content);
+
+      if (dropRegex && dropRegex.test(searchIndex)) {
+        return;
+      }
 
       filtered = regex && regex.test(searchIndex);
       sound = 'reply_boop';
