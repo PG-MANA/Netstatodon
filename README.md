@@ -1,4 +1,4 @@
-# Netstatodon
+# don.taprix.org
 
-https://netstat.app/  
+https://don.taprix.org/  
 Mastodonのfork。Ruby全然わからない並に書き換えてる。
