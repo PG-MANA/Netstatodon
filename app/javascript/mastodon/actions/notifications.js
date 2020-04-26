@@ -57,7 +57,6 @@ export function updateNotifications(notification, intlMessages, intlLocale) {
     const filters      = getFiltersRegex(getState(), { contextType: 'notifications' });
 
     let filtered = false;
-    let sound = 'boop';
 
     if (notification.type === 'mention') {
       const dropRegex   = filters[0];
@@ -69,7 +68,6 @@ export function updateNotifications(notification, intlMessages, intlLocale) {
       }
 
       filtered = regex && regex.test(searchIndex);
-      sound = 'reply_boop';
     }
 
     if (showInColumn) {
@@ -83,14 +81,14 @@ export function updateNotifications(notification, intlMessages, intlLocale) {
         type: NOTIFICATIONS_UPDATE,
         notification,
         usePendingItems: preferPendingItems,
-        meta: (playSound && !filtered) ? { sound: sound } : undefined,
+        meta: (playSound && !filtered) ? { sound: 'boop' } : undefined,
       });
 
       fetchRelatedRelationships(dispatch, [notification]);
     } else if (playSound && !filtered) {
       dispatch({
         type: NOTIFICATIONS_UPDATE_NOOP,
-        meta: { sound: sound },
+        meta: { sound: 'boop' },
       });
     }
 

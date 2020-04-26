@@ -54,7 +54,7 @@ services:
       - ./public/system:/mastodon/public/system
 
   streaming:
-#    build: .
+    build: .
     image: tootsuite/mastodon
     restart: always
     env_file: .env.production
@@ -71,7 +71,7 @@ services:
       - redis
 
   sidekiq:
-#    build: .
+    build: .
     image: tootsuite/mastodon
     restart: always
     env_file: .env.production

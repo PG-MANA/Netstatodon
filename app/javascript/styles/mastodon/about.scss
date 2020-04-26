@@ -452,7 +452,7 @@ $small-breakpoint: 960px;
   }
 
   &__call-to-action {
-    background: rgba($ui-base-color, 0.8);
+    background: $ui-base-color;
     border-radius: 4px;
     padding: 25px 40px;
     overflow: hidden;
@@ -573,7 +573,7 @@ $small-breakpoint: 960px;
   &__forms,
   #mastodon-timeline {
     box-sizing: border-box;
-    background: rgba($ui-base-color, 0.8);
+    background: $ui-base-color;
     border-radius: 4px;
     box-shadow: 0 0 6px rgba($black, 0.1);
   }
@@ -889,3 +889,4 @@ $small-breakpoint: 960px;
     color: $dark-text-color;
   }
 }
+

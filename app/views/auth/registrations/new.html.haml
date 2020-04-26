@@ -35,10 +35,6 @@
   .fields-group
     = f.input :agreement, as: :boolean, wrapper: :with_label, label: whitelist_mode? ? t('auth.checkbox_agreement_without_rules_html', terms_path: terms_path) : t('auth.checkbox_agreement_html', rules_path: about_more_path, terms_path: terms_path)
 
-  %script{ :async => '', :defer => 'defer', :src => 'https://www.google.com/recaptcha/api.js' }
-  .g-recaptcha{ :data => { :sitekey => '6LeSaB4UAAAAACSjQJRZLS53t3L6ICGN4kKW7PDi' } }
-  %p.hint= t('auth.agreement_html', rules_path: about_more_path, terms_path: terms_path)
-
   .actions
     = f.button :button, @invite.present? ? t('auth.register') : sign_up_message, type: :submit
 
