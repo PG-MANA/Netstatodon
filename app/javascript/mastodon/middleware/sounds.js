@@ -34,6 +34,16 @@ export default function soundsMiddleware() {
         type: 'audio/mpeg',
       },
     ]),
+    reply_boop: createAudio([
+      {
+        src: '/sounds/reply.ogg',
+        type: 'audio/ogg',
+      },
+      {
+        src: '/sounds/reply.mp3',
+        type: 'audio/mpeg',
+      },
+    ])
   };
 
   return () => next => action => {
